@@ -6,26 +6,22 @@ import React from 'react';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
-import {
-    Card, Button, CardImg, CardTitle, CardText, CardColumns,
-    CardSubtitle, CardBody
-} from 'reactstrap';
+import { Card, CardImg, CardTitle, CardColumns, Button } from 'reactstrap';
 
 const Kartu = (props) => {
     return (
-
-        <CardColumns>
-            <Card>
-                <Link to="/login">
-                    <CardImg img src={props.image} alt='products' />
-                </Link>
-                <CardTitle>
-                    {props.judul}
-                </CardTitle>
-
-            </Card>
-        </CardColumns>
-
+        <div className='col-4'>
+            <CardColumns>
+                <Card>
+                    <Link to={`/movie-detail?id=${props.id}`}>
+                        <CardImg img src={props.image} alt='products' />
+                    </Link>
+                    <CardTitle>
+                        {props.judul}
+                    </CardTitle>
+                </Card>
+            </CardColumns>
+        </div>
     );
 }
 

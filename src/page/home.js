@@ -2,6 +2,9 @@ import React, { Component } from "react"
 import Kartu from "../component/kartu"
 import Axios from "axios"
 import Carousel from "../component/carousel"
+import "./home.css"
+import { connect } from 'react-redux';
+import { Alert } from 'reactstrap';
 
 class Home extends Component {
 
@@ -21,7 +24,7 @@ class Home extends Component {
     renderCardProduct = () => {
         return this.state.data.map((val) => {
             return (
-                <Kartu judul={val.name} image={val.image} />
+                <Kartu judul={val.name} image={val.image} id={val.id}> </Kartu>
             )
         })
     }
@@ -36,10 +39,20 @@ class Home extends Component {
         return (
             <div>
                 <div>
-
+                    {
+                        this.props.username
+                            ?
+                            <Alert color="dark">
+                                Hi! {this.props.username}
+                            </Alert>
+                            :
+                            null
+                    }
+                </div>
+                <div className="bebas">
                     {this.renderCarousel()}
                 </div>
-                <div>
+                <div className="row">
                     {this.renderCardProduct()}
                 </div >
             </div>
@@ -47,4 +60,10 @@ class Home extends Component {
     }
 }
 
-export default (Home)
+const mapStatetoProps = ({ auth }) => {
+    return {
+        username: auth.username
+    }
+}
+
+export default connect(mapStatetoProps)(Home);

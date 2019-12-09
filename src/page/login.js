@@ -2,16 +2,18 @@ import React, { Component } from "react"
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Axios from "axios"
-import { Alert } from 'reactstrap';
+import { connect } from "react-redux"
+import { Login } from "../redux/action"
 
-class Login extends Component {
+class Loginpage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            data: [],
         }
     }
 
@@ -22,8 +24,6 @@ class Login extends Component {
     loginUser = () => {
         let username = this.state.username;
         let password = this.state.password;
-        console.log(password)
-        console.log(username)
         if (username === '' || password === '') {
             alert('Fill in all the forms')
         } else {
@@ -35,13 +35,9 @@ class Login extends Component {
                     if (res.data.length === 0) {
                         alert('username or password invalid')
                     } else {
-                        console.log("login sukses denngan username", username)
-                        return (<div>
-                            < Alert color="primary" >
-                                This is a primary alert — check it out!
-                            </Alert >
-                        </div>
-                        )
+                        console.log(res.data)
+                        Login(res.data[0])
+                        localStorage.setItem('username', res.data[0].username)
                     }
                 })
                 .catch((err) => {
@@ -51,8 +47,15 @@ class Login extends Component {
     }
 
     render() {
-        return (
+        console.log(this.props.username)
+        if (this.props.username) {
+            return (
+                <Redirect to='/'>
 
+                </Redirect>
+            )
+        }
+        return (
             <div style={{
                 position: 'absolute', left: '50%', top: '50%',
                 transform: 'translate(-50%, -50%)'
@@ -78,4 +81,10 @@ class Login extends Component {
     }
 }
 
-export default Login
+const mapStatetoProps = ({ auth }) => {
+    return {
+        username: auth.username
+    }
+}
+
+export default connect(mapStatetoProps, { Login })(Loginpage);

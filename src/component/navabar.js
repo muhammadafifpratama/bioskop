@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Popover from '@material-ui/core/Popover';
 import Link from '@material-ui/core/Link';
+//PERLU REDUX
 
 const useStyles = makeStyles(theme => ({
     root: {
