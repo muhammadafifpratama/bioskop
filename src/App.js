@@ -11,12 +11,15 @@ import Axios from "axios"
 import { connect } from "react-redux"
 import { Login } from "./redux/action"
 import admin from "./page/admin"
+import { API_URL } from './helper/API_URL';
+import tombol from "./page/profile"
+import order from "./page/pesenkursi"
 
 class App extends Component {
   componentDidMount() {
     let username = localStorage.getItem('username')
     if (username) {
-      Axios.get(`localhost:2000/users?username=${username}`)
+      Axios.get(API_URL + `users?username=${username}`)
         .then((res) => {
           this.props.Login(res.data[0])
         })
@@ -26,6 +29,8 @@ class App extends Component {
     return (
       <div>
         <ButtonAppBar />
+        <Route path="/profile" component={tombol} exact />
+        <Route path="/order" component={order} exact />
         <Route path="/" component={rumah} exact />
         <Route path="/admin" component={admin} exact />
         <Route path="/forgot_password" component={forgotpassword} exact />

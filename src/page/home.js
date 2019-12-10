@@ -5,16 +5,16 @@ import Carousel from "../component/carousel"
 import "./home.css"
 import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
+import { API_URL } from "../helper/API_URL"
 
 class Home extends Component {
 
     state = {
-        data: [],
-        nama: ""
+        data: []
     }
 
     componentDidMount() {
-        Axios.get("http://localhost:2000/movies")
+        Axios.get(API_URL + "movies")
             .then((res) => {
                 console.log(res.data)
                 this.setState({ data: res.data })

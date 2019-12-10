@@ -61,6 +61,7 @@ class Register extends Component {
                             })
                                 .then((res) => {
                                     console.log(res.data)
+                                    alert("registered successfully")
                                 })
                         } else {
                             alert('Please Fill the Password Requirements')

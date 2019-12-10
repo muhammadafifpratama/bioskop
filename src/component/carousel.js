@@ -6,6 +6,11 @@ import {
     CarouselIndicators,
     // CarouselCaption
 } from 'reactstrap';
+import Axios from 'axios';
+
+
+
+
 
 const items = [
     {
@@ -67,7 +72,6 @@ const CarouselHome = (props) => {
             <CarouselItem
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
-                key={index}
             >
                 <img src={item.image} alt={item.nama} style={{ width: '300px', height: '300px', objectFit: 'cover' }} />
                 {/* <CarouselCaption captionText={item.caption} captionHeader={item.caption} /> */}

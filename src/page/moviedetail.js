@@ -83,7 +83,7 @@ class MovieDetail extends Component {
                                 {data.synopsis}
                             </div>
                             <div className='vertical-spacing' style={{ marginTop: '100px', float: 'right' }}>
-                                <Button color='danger' className='btn-custom'>Choose My Seats</Button>
+                                <Button color='danger' className='btn-custom' href="/order">Choose My Seats</Button>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { API_URL } from '../helper/API_URL';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,11 +12,12 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reacts
 class Admin extends Component {
     state = {
         data: [],
-        openModal: false
+        openModal: false,
+        selectedId: null
     }
 
     componentDidMount() {
-        Axios.get('http://localhost:2000/movies')
+        Axios.get(API_URL + 'movies')
             .then((res) => {
                 this.setState({ data: res.data })
                 console.log(this.state.data)
@@ -35,8 +37,46 @@ class Admin extends Component {
     }
 
     renderMovies = () => {
-        let { data } = this.state;
+        let { data, selectedId } = this.state;
         return data.map((val) => {
+            if (val.id === selectedId) {
+                return (
+                    <TableRow>
+                        <TableCell>
+                            {val.id}
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.name} innerRef={(name) => this.name = name} />
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.director} innerRef={(directorMov) => this.directorMov = directorMov} />
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.image} innerRef={(image) => this.image = image} />
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.genre} innerRef={(genre) => this.genre = genre} />
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.duration} type='number' innerRef={(duration) => this.duration = duration} />
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.synopsis} innerRef={(synopsis) => this.synopsis = synopsis} />
+                        </TableCell>
+                        <TableCell>
+                            <Input defaultValue={val.casts} innerRef={(casts) => this.casts = casts} />
+                        </TableCell>
+                        <TableCell>
+                            <Button onClick={() => this.setState({ selectedId: null })}>
+                                Cancel
+                            </Button>
+                            <Button onClick={() => this.editMovie(val.id)}>
+                                Confirm
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                )
+            }
             return (
                 <TableRow>
                     <TableCell>{val.id}</TableCell>
@@ -60,10 +100,10 @@ class Admin extends Component {
                         })}
                     </TableCell>
                     <TableCell>
-                        <Button color='primary'>
+                        <Button color='primary' onClick={() => this.setState({ selectedId: val.id })}>
                             Edit
                         </Button>
-                        <Button color='secondary'>
+                        <Button color='secondary' onClick={() => this.deleteMovie(val.id)}>
                             Delete
                         </Button>
                     </TableCell>
@@ -72,8 +112,24 @@ class Admin extends Component {
         })
     }
 
-    onBtnAddMovie = () => {
-        let name = this.title.value;
+    deleteMovie = (id) => {
+        Axios.delete(API_URL + `movies/${id}`)
+            .then((res) => {
+                console.log(res.data)
+                Axios.get(API_URL + 'movies')
+                    .then((res) => {
+                        // console.log(res.data)
+                        this.setState({ data: res.data })
+                        alert('Delete Successful!')
+                    })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    editMovie = (id) => {
+        let name = this.name.value;
         let director = this.directorMov.value;
         let image = this.image.value;
         let genre = this.genre.value.split(',');
@@ -87,14 +143,47 @@ class Admin extends Component {
             genre,
             duration,
             synopsis,
+            casts
+        }
+        Axios.patch(API_URL + `movies/${id}`, data)
+            .then((res) => {
+                console.log(res.data)
+                Axios.get(API_URL + 'movies')
+                    .then((res) => {
+                        this.setState({ data: res.data, selectedId: null })
+                        alert('Edit Successful')
+                    })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    onBtnAddMovie = () => {
+        let name = this.title.value;
+        let director = this.directorMov.value;
+        let image = this.image.value;
+        let genre = this.genre.value.split(', ');
+        console.log(genre)
+        console.log(this.genre.value)
+        let duration = this.duration.value;
+        let synopsis = this.synopsis.value;
+        let casts = this.casts.value.split(',')
+        let data = {
+            name,
+            director,
+            image,
+            genre,
+            duration,
+            synopsis,
             casts,
+            booked: []
         }
         if (name && director && image && genre && duration && synopsis && casts) {
-
-            Axios.post(`http://localhost:2000/movies`, data)
+            Axios.post(API_URL + `movies`, data)
                 .then((res) => {
                     console.log(res.data)
-                    Axios.get('http://localhost:2000/movies')
+                    Axios.get(API_URL + 'movies')
                         .then((res) => {
                             console.log(res.data)
                             this.setState({ data: res.data, openModal: false })
@@ -110,7 +199,8 @@ class Admin extends Component {
     }
 
     render() {
-        let { openModal } = this.state;
+        let { openModal, selectedId } = this.state;
+        console.log(selectedId)
         return (
             <div>
                 <Button onClick={() => this.setState({ openModal: true })}>
