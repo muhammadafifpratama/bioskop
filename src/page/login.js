@@ -8,13 +8,8 @@ import { connect } from "react-redux"
 import { Login } from "../redux/action"
 
 class Loginpage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            password: "",
-            data: [],
-        }
+    state = {
+        error: false
     }
 
     handleChange = (event) => {
@@ -22,8 +17,10 @@ class Loginpage extends Component {
     }
 
     loginUser = () => {
-        let username = this.state.username;
-        let password = this.state.password;
+        let username = this.username.value
+        let password = this.password.value
+        console.log(username)
+        console.log(password)
         if (username === '' || password === '') {
             alert('Fill in all the forms')
         } else {
@@ -36,8 +33,9 @@ class Loginpage extends Component {
                         alert('username or password invalid')
                     } else {
                         console.log(res.data)
-                        Login(res.data[0])
+                        this.props.Login(res.data[0])
                         localStorage.setItem('username', res.data[0].username)
+                        console.log(this.props.username)
                     }
                 })
                 .catch((err) => {
@@ -65,9 +63,9 @@ class Loginpage extends Component {
                         position: 'absolute', left: '50%', top: '50%',
                         transform: 'translate(-50%, -50%)'
                     }}>
-                        <TextField id="standard-basic" label="Username" onChange={this.handleChange} name="username" value={this.state.username} />
+                        <TextField id="standard-basic" label="Username" inputRef={(username) => this.username = username} > </TextField>
                         <br></br>
-                        <TextField id="standard-password-input" label="Password" type="password" onChange={this.handleChange} name="password" value={this.state.password} />
+                        <TextField id="standard-password-input" label="Password" type="password" inputRef={(password) => this.password = password}> </TextField>
                         <br></br>
                         <Button variant="contained" color="secondary" style={{ minWidth: '185px' }} onClick={this.loginUser}>Login</Button>
                         <br></br><br></br>

@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Popover from '@material-ui/core/Popover';
 import Link from '@material-ui/core/Link';
+import { connect } from "react-redux";
+import { Logout } from "../redux/action"
 //PERLU REDUX
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +24,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function ButtonAppBar() {
+const Example = (props) => {
+    let { role, Logout } = props;
+    const onBtnLogout = () => {
+        Logout()
+        localStorage.removeItem('username')
+    }
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -36,40 +43,124 @@ export default function ButtonAppBar() {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+    if (role === 'user') {
+        return (
+            <div className={classes.root}>
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                >
+                    <Button variant="contained" onClick={onBtnLogout}>Logout</Button>
+                    <Button variant="contained" href="/daftar">ganti password</Button>
+                </Popover>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
 
-    return (
-        <div className={classes.root}>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-            >
-                <Button variant="contained" href="/login">Login</Button>
-                <Button variant="contained" href="/daftar">Register</Button>
-            </Popover>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
+                            <MenuIcon />
+                        </IconButton>
 
-                        <MenuIcon />
-                    </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                            <Link href="/" color="inherit">Bioskop </Link>
+                        </Typography>
 
-                    <Typography variant="h6" className={classes.title}>
-                        <Link href="/" color="inherit">Bioskop </Link>
-                    </Typography>
+                        <Button color="inherit" href="/login">{props.role}</Button>
+                    </Toolbar>
+                </AppBar>
+            </div >
+        );
+    }
+    else if (role === 'admin') {
+        return (
+            <div className={classes.root}>
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                >
+                    <Button variant="contained" href="/admin">admin page</Button>
+                    <Button variant="contained" href='/login'>Manage Movies</Button>
+                </Popover>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
 
-                    <Button color="inherit" href="/login">Login</Button>
-                </Toolbar>
-            </AppBar>
-        </div >
-    );
+                            <MenuIcon />
+                        </IconButton>
+
+                        <Typography variant="h6" className={classes.title}>
+                            <Link href="/" color="inherit">Bioskop </Link>
+                        </Typography>
+
+                        <Button color="inherit" href="/login">{props.role}</Button>
+                    </Toolbar>
+                </AppBar>
+            </div >
+        );
+    }
+    else {
+        return (
+            <div className={classes.root}>
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                >
+                    <Button variant="contained" href="/login">Login</Button>
+                    <Button variant="contained" href="/daftar">Register</Button>
+                </Popover>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
+
+                            <MenuIcon />
+                        </IconButton>
+
+                        <Typography variant="h6" className={classes.title}>
+                            <Link href="/" color="inherit">Bioskop </Link>
+                        </Typography>
+
+                        <Button color="inherit" href="/login">Login</Button>
+                    </Toolbar>
+                </AppBar>
+            </div >
+        );
+    }
 }
+
+const mapStatetoProps = ({ auth }) => {
+    return {
+        role: auth.role
+    }
+}
+
+export default connect(mapStatetoProps, { Logout })(Example);
+

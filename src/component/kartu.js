@@ -6,7 +6,7 @@ import React from 'react';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
-import { Card, CardImg, CardTitle, CardColumns, Button } from 'reactstrap';
+import { Card, CardImg, CardTitle, CardColumns } from 'reactstrap';
 
 const Kartu = (props) => {
     return (

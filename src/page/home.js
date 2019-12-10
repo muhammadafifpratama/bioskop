@@ -50,7 +50,9 @@ class Home extends Component {
                     }
                 </div>
                 <div className="bebas">
-                    {this.renderCarousel()}
+                    <center>
+                        {this.renderCarousel()}
+                    </center>
                 </div>
                 <div className="row">
                     {this.renderCardProduct()}
