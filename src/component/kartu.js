@@ -8,7 +8,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { Card, CardImg, CardTitle, CardColumns } from 'reactstrap';
 
-const Kartu = (props) => {
+const Kartuasd = (props) => {
     return (
         <div className='col-4'>
             <CardColumns>
@@ -25,4 +25,4 @@ const Kartu = (props) => {
     );
 }
 
-export default Kartu
+export default Kartuasd

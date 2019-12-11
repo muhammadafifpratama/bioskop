@@ -26,7 +26,7 @@ const Profile = (props) => {
     const onBtnLogout = () => {
         Logout()
         localStorage.removeItem('username')
-        alert("anda sudah terlogout")
+        alert("terlogout dengan sukses~")
         // < Redirect to = '/' >
 
         //     </Redirect >

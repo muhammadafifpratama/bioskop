@@ -6,6 +6,8 @@ import "./home.css"
 import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 import { API_URL } from "../helper/API_URL"
+import Lain from "../component/grid"
+import Grid from '@material-ui/core/Grid';
 
 class Home extends Component {
 
@@ -25,6 +27,14 @@ class Home extends Component {
         return this.state.data.map((val) => {
             return (
                 <Kartu judul={val.name} image={val.image} id={val.id}> </Kartu>
+            )
+        })
+    }
+
+    rendergrid = () => {
+        return this.state.data.map((val) => {
+            return (
+                <Lain judul={val.name} image={val.image} id={val.id}></Lain>
             )
         })
     }
@@ -55,7 +65,8 @@ class Home extends Component {
                     </center>
                 </div>
                 <div className="row">
-                    {this.renderCardProduct()}
+                    {/* {this.renderCardProduct()} */}
+                    {this.rendergrid()}
                 </div >
             </div>
         )

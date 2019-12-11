@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { API_URL } from '../helper/API_URL';
 import { Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class MovieDetail extends Component {
     state = {
-        data: []
+        data: [],
+        redirectLogin: false,
+        redirectPurchase: false
     }
 
     componentDidMount() {
         let id = this.props.location.search.split('=')[1];
-        console.log(id)
-        Axios.get(`http://localhost:2000/movies/${id}`)
+        console.log(this.props.location.search.split('='))
+        // console.log(id)
+        Axios.get(API_URL + `movies/${id}`)
             .then((res) => {
                 this.setState({ data: res.data })
                 console.log(this.state.data)
@@ -42,23 +48,36 @@ class MovieDetail extends Component {
         }
     }
 
+    onBtnReservation = () => {
+        let { username } = this.props;
+        if (username) {
+            this.setState({ redirectPurchase: true })
+        } else {
+            this.setState({ redirectLogin: true })
+        }
+    }
+
     render() {
-        let { data } = this.state;
+        let { data, redirectLogin, redirectPurchase } = this.state;
+        if (redirectLogin) {
+            return (
+                <Redirect to='/login' />
+            )
+        } else if (redirectPurchase) {
+            return (
+                <Redirect to={{ pathname: '/order', state: this.state.data }} />
+            )
+        }
         if (data === []) {
             return (
                 <div className='d-flex justify-content-center'>
-                    {/* <Loader
-                        type='Circles'
-                        color='#DC3545'
-                        height={200}
-                        width={200}
-                    /> */}
+
                 </div>
             )
         } else {
 
             return (
-                <div className='container'>
+                <div className='container full-height'>
                     <div className='row'>
                         <div className='col-4'>
                             <img src={data.image} alt='display poster' />
@@ -83,7 +102,7 @@ class MovieDetail extends Component {
                                 {data.synopsis}
                             </div>
                             <div className='vertical-spacing' style={{ marginTop: '100px', float: 'right' }}>
-                                <Button color='danger' className='btn-custom' href="/order">Choose My Seats</Button>
+                                <Button color='danger' className='btn-custom' onClick={this.onBtnReservation}>Choose My Seats</Button>
                             </div>
                         </div>
                     </div>
@@ -93,4 +112,10 @@ class MovieDetail extends Component {
     }
 }
 
-export default MovieDetail;
+const mapStateToProps = ({ auth }) => {
+    return {
+        username: auth.username
+    }
+}
+
+export default connect(mapStateToProps)(MovieDetail);

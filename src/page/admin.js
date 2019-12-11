@@ -8,6 +8,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Button } from '@material-ui/core';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
+import { Logout } from "../redux/action"
+import BlockIcon from '@material-ui/icons/Block';
+
+const onBtnLogout = () => {
+    Logout()
+    localStorage.removeItem('username')
+    alert("terlogout dengan sukses~")
+    // < Redirect to = '/' >
+
+    //     </Redirect >
+}
 
 class Admin extends Component {
     state = {
@@ -203,6 +214,14 @@ class Admin extends Component {
         console.log(selectedId)
         return (
             <div>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<BlockIcon />}
+                    onClick={onBtnLogout}
+                >
+                    Logout
+      </Button>
                 <Button onClick={() => this.setState({ openModal: true })}>
                     Add Movie
                 </Button>
