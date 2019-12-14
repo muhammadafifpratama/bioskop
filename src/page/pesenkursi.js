@@ -17,7 +17,9 @@ class SeatReservation extends Component {
         booked: [[1, 0], [0, 1]],
         chosen: [],
         price: 0,
-        count: 0
+        count: 0,
+        kursi: [],
+        nomor: ""
     };
 
 
@@ -32,22 +34,42 @@ class SeatReservation extends Component {
                 console.log(err)
             })
     }
-
     onBtnSeatClick = (arr) => {
         console.log(this.state.price)
-        let { chosen, price, count } = this.state;
+        let { chosen, price, count, kursi, nomor } = this.state;
+        let nomorkursi = ""
         // if(chosen.length >= 5){
         //     return null
         // }else{
-
         chosen.push(arr);
+        var alphabet = ["a", "b", "c", "d", "e"]
+        for (let l = 0; l < 1; l++) {
+            nomorkursi += (alphabet[arr[0]] + arr[1])
+        }
+        kursi.push(nomorkursi)
+        let aaa = this.state.kursi.toString()
         this.setState({
             chosen,
             price: price + 50000,
-            count: count + 1
+            count: count + 1,
+            kursi,
+            nomor: aaa
         })
-        // }
+        console.log(this.state.kursi)
     }
+
+    // nomorkursi = () => {
+    //     let { chosen, nomor } = this.state;
+    //     nomor.push(...chosen)
+    //     // var aaa = nomor.slice(1, 2);
+    //     // var cccc = aaa.splice(0, 1, "a1");
+    //     var bbb = nomor.toString()
+    //     console.log(nomor)
+    //     console.log(chosen)
+    //     console.log(bbb)
+    //     // console.log(aaa)
+    //     // console.log(cccc)
+    // }
 
     onBtnCancelSeat = (arr) => {
         console.log(this.state.price)
@@ -114,6 +136,7 @@ class SeatReservation extends Component {
                 </div>
             )
         })
+
     }
 
     addToCart = () => {
@@ -129,6 +152,7 @@ class SeatReservation extends Component {
         console.log(addCart)
         cart.push(addCart)
         booked.push(...chosen)
+
         Axios.patch(API_URL + `users/${idUser}`, {
             cart: cart
         })
@@ -154,16 +178,8 @@ class SeatReservation extends Component {
             <div className='container full-height'>
                 <div className='d-flex justify-content-center'>
                     <h1>Choosing Seats for {name} </h1>
-                    <Typography variant="body2" component="h2">
-                        h1. Heading</Typography>
                 </div>
                 {this.renderSeat()}
-                <Button
-                    variant="contained"
-                    color="default"
-                    startIcon={<SaveIcon />}
-                    onClick={this.addToCart}
-                ></Button>
                 <div>
                     <Paper>
                         <Grid container spacing={2}>,
@@ -199,6 +215,7 @@ class SeatReservation extends Component {
                                 <Grid item>
                                     <Typography variant="subtitle1">Rp. {this.state.price.toLocaleString()}</Typography>
                                     <Typography variant="subtitle1">{this.state.count} Seats</Typography>
+                                    <Typography variant="subtitle1">seats number {this.state.nomor}</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
