@@ -219,6 +219,7 @@ class Admin extends Component {
                     color="secondary"
                     startIcon={<BlockIcon />}
                     onClick={onBtnLogout}
+                    href="/"
                 >
                     Logout
       </Button>

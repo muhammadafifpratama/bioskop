@@ -73,14 +73,18 @@ class SeatReservation extends Component {
 
     onBtnCancelSeat = (arr) => {
         console.log(this.state.price)
-        let { chosen, price, count } = this.state;
+        let { chosen, price, count, kursi } = this.state;
         let output = chosen.filter((val) => {
             return val.join('') !== arr.join('')
+        })
+        let aaa = chosen.filter((val) => {
+            return val.join("") !== arr.join("")
         })
         this.setState({
             chosen: output,
             price: price - 50000,
-            count: count - 1
+            count: count - 1,
+            kursi: aaa
         })
     }
 
@@ -142,12 +146,13 @@ class SeatReservation extends Component {
     addToCart = () => {
         let { cart, idUser } = this.props;
         let { name, id, booked } = this.props.location.state;
-        let { price, chosen, count } = this.state;
+        let { price, chosen, count, kursi } = this.state;
         let addCart = {
             name,
             totalPrice: price,
-            seats: chosen,
-            ticketAmount: count
+            seats: kursi,
+            ticketAmount: count,
+
         }
         console.log(addCart)
         cart.push(addCart)
@@ -182,7 +187,7 @@ class SeatReservation extends Component {
                 {this.renderSeat()}
                 <div>
                     <Paper>
-                        <Grid container spacing={2}>,
+                        <Grid container spacing={2}>
                             <Grid item>
                                 <ButtonBase >
                                     <img alt="complex" src={image} width="35%" />
