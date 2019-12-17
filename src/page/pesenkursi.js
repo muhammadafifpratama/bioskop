@@ -14,12 +14,12 @@ import { addToCart } from "../redux/action"
 class SeatReservation extends Component {
     state = {
         data: [],
-        booked: [[1, 0], [0, 1]],
+        booked: [],
         chosen: [],
         price: 0,
         count: 0,
-        kursi: [],
-        nomor: ""
+        nomorkursi: [],
+        nomor: []
     };
 
 
@@ -36,26 +36,45 @@ class SeatReservation extends Component {
     }
     onBtnSeatClick = (arr) => {
         console.log(this.state.price)
-        let { chosen, price, count, kursi, nomor } = this.state;
-        let nomorkursi = ""
+        let { chosen, price, count, nomorkursi, nomor } = this.state;
         // if(chosen.length >= 5){
         //     return null
         // }else{
         chosen.push(arr);
-        var alphabet = ["a", "b", "c", "d", "e"]
-        for (let l = 0; l < 1; l++) {
-            nomorkursi += (alphabet[arr[0]] + arr[1])
+        // var alphabet = ["a", "b", "c", "d", "e"]
+        // for (let l = 0; l < 1; l++) {
+        //     nomorkursi += (alphabet[arr[0]] + arr[1])
+        // }
+        // let aaa = this.state.kursi.toString()
+        let kursi = []
+        if (arr[0] === 0) {
+            kursi = "A"
+            nomor = kursi + arr[1]
         }
-        kursi.push(nomorkursi)
-        let aaa = this.state.kursi.toString()
+        if (arr[0] === 1) {
+            kursi = "B"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 2) {
+            kursi = "C"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 3) {
+            kursi = "D"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 4) {
+            kursi = "E"
+            nomor = kursi + arr[1]
+        }
+        nomorkursi.push(nomor)
         this.setState({
             chosen,
             price: price + 50000,
             count: count + 1,
-            kursi,
-            nomor: aaa
+            nomorkursi,
+            nomor
         })
-        console.log(this.state.kursi)
     }
 
     // nomorkursi = () => {
@@ -71,35 +90,80 @@ class SeatReservation extends Component {
     //     // console.log(cccc)
     // }
 
-    onBtnCancelSeat = (arr) => {
+    onBtnCancelSeat = (arr, kursi) => {
+
         console.log(this.state.price)
-        let { chosen, price, count, kursi } = this.state;
+        let { chosen, price, count, nomorkursi, nomor } = this.state;
+        if (arr[0] === 0) {
+            kursi = "A"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 1) {
+            kursi = "B"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 2) {
+            kursi = "C"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 3) {
+            kursi = "D"
+            nomor = kursi + arr[1]
+        }
+        if (arr[0] === 4) {
+            kursi = "E"
+            nomor = kursi + arr[1]
+        }
         let output = chosen.filter((val) => {
             return val.join('') !== arr.join('')
         })
-        let aaa = chosen.filter((val) => {
-            return val.join("") !== arr.join("")
+        let aaa = nomorkursi.filter((val) => {
+            return val !== nomor
+
+            //return val.join("") !== nomor.join("")
         })
+        console.log(aaa);
+        console.log(nomor);
+        console.log(nomorkursi);
+
         this.setState({
             chosen: output,
             price: price - 50000,
             count: count - 1,
-            kursi: aaa
+            nomorkursi: aaa
         })
+    }
+
+    nomorkursi = (arr) => {
+
+
+
+        // let aaa = []
+        // let seats = 100;
+        // for (let i = 0; i < seats / 20; i++) {
+        //     arr.push([])
+        //     for (let j = 0; j < seats / (seats / 20); j++) {
+        //         arr[i].push(i)
+        //     }
+        // }
+        // for (let z = 0; z < seats / (seats / 20); z++) {
+
+        // }
+
+        // console.log(arr)
     }
 
     renderSeat = () => {
         let seats = 100;
         let { chosen, booked } = this.state;
         let arr = [];
-
         for (let i = 0; i < seats / 20; i++) {
             arr.push([])
             for (let j = 0; j < seats / (seats / 20); j++) {
                 arr[i].push(1)
             }
         }
-        console.log(arr + "yang ini ")
+        console.log(arr)
         for (let k = 0; k < booked.length; k++) {
             arr[booked[k][0]][booked[k][1]] = 2
         }
@@ -146,13 +210,13 @@ class SeatReservation extends Component {
     addToCart = () => {
         let { cart, idUser } = this.props;
         let { name, id, booked } = this.props.location.state;
-        let { price, chosen, count, kursi } = this.state;
+        let { price, chosen, count, kursi, nomorkursi } = this.state;
         let addCart = {
             name,
             totalPrice: price,
             seats: kursi,
             ticketAmount: count,
-
+            nomorkursi
         }
         console.log(addCart)
         cart.push(addCart)
@@ -179,12 +243,16 @@ class SeatReservation extends Component {
     render() {
         let { name, image, genre, casts } = this.props.location.state;
         console.log(this.props.location.state)
+        console.log(this.state.nomorkursi);
+        console.log(this.state.nomor);
+        let akhirnya = this.state.nomorkursi.toString()
         return (
             <div className='container full-height'>
                 <div className='d-flex justify-content-center'>
                     <h1>Choosing Seats for {name} </h1>
                 </div>
                 {this.renderSeat()}
+                {this.nomorkursi()}
                 <div>
                     <Paper>
                         <Grid container spacing={2}>
@@ -220,7 +288,7 @@ class SeatReservation extends Component {
                                 <Grid item>
                                     <Typography variant="subtitle1">Rp. {this.state.price.toLocaleString()}</Typography>
                                     <Typography variant="subtitle1">{this.state.count} Seats</Typography>
-                                    <Typography variant="subtitle1">seats number {this.state.nomor}</Typography>
+                                    <Typography variant="subtitle1">seats number {akhirnya}</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>

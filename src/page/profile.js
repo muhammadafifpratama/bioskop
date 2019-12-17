@@ -3,10 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import AddBoxIcon from '@material-ui/icons/AddBox';
 import { Logout } from "../redux/action"
 import { connect } from "react-redux";
 import { Link, Redirect } from 'react-router-dom';
@@ -42,28 +40,40 @@ class Profile extends Component {
                 this.setState({ data: res.data[0].cart })
                 var jumlahsemua = res.data[0].cart[0].totalPrice
                 var banyak = res.data[0].cart
-                var i;
                 var output = 0
                 console.log(banyak.length)
-                for (i = 0; i < banyak.length; i++) {
-                    output += jumlahsemua
+                for (var i = 0; i < banyak.length; i++) {
+                    output += res.data[0].cart[i].totalPrice;
                 }
                 this.setState({
                     totalPrice: output
                 })
                 console.log(output);
                 console.log(jumlahsemua);
+                console.log(res.data[0].cart);
+
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
+    checkout = () => {
+
+    }
+
     rendertiket = () => {
         let data = this.state.data
-        let { totalPrice } = this.state
+        console.log(data);
         return data.map((val) => {
-            console.log(val.seats);
+            console.log(val);
+            var kursi = val.nomorkursi
+            var tes = "";
+            console.log(kursi);
+            for (var i = 0; i < kursi.length; i++) {
+                tes += kursi[i] + ", "
+            }
+            console.log(tes);
 
             return (
                 <Paper>
@@ -79,7 +89,7 @@ class Profile extends Component {
                                     <Typography variant="body2" color="textSecondary">
                                         amount to be paid = Rp. {val.totalPrice.toLocaleString()}
                                     </Typography>
-                                    kursi mana aja {val.seats}
+                                    nomor kursi = {tes}
                                 </Grid>
                                 <Button
                                     variant="contained"
@@ -122,6 +132,7 @@ class Profile extends Component {
                     </Button>
                     <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }}>
                         {this.rendertiket()}
+                        {this.rendercheckout()}
                         <Grid item>
                             <br></br>
                             <Typography variant="body2" color="textSecondary">
