@@ -15,6 +15,7 @@ import { API_URL } from './helper/API_URL';
 import tombol from "./page/profile"
 import order from "./page/pesenkursi"
 import notfound from "./page/404"
+import history from "./page/transaksi"
 
 
 class App extends Component {
@@ -41,6 +42,7 @@ class App extends Component {
           <Route path="/login" component={login} />
           <Route path="/daftar" component={daftar} />
           <Route path="/movie-detail" component={isifilm} />
+          <Route path="/transaction-history" component={history} />
           <Route path="*" component={notfound} />
         </Switch>
       </div>

@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import SaveIcon from '@material-ui/icons/Save';
+import { addToCart } from "../redux/action/";
 
 const onBtnLogout = () => {
     Logout()
@@ -30,18 +31,23 @@ class Profile extends Component {
 
     state = {
         data: [],
-        totalPrice: 0
+        totalPrice: 0,
+        namauser: ""
     }
 
     componentDidMount() {
         let username = localStorage.getItem('username')
         Axios.get(API_URL + `users?username=${username}`)
             .then((res) => {
-                this.setState({ data: res.data[0].cart })
+                this.setState({
+                    data: res.data[0].cart,
+                    namauser: res.data[0].username
+                })
                 var jumlahsemua = res.data[0].cart[0].totalPrice
                 var banyak = res.data[0].cart
                 var output = 0
-                console.log(banyak.length)
+                console.log(res.data[0].username)
+                console.log(res.data)
                 for (var i = 0; i < banyak.length; i++) {
                     output += res.data[0].cart[i].totalPrice;
                 }
@@ -58,7 +64,27 @@ class Profile extends Component {
             })
     }
 
+    totalharga = () => {
+        let data = this.state.data
+        console.log(data);
+
+        // console.log(data[0].cart[0].totalPrice)
+    }
+
     checkout = () => {
+        let nama = this.state.namauser
+        let data = this.state.data
+        let kosong = []
+        let { idUser } = this.props;
+        console.log(data);
+        console.log(nama)
+        Axios.post(API_URL + `transaction`, {
+            data,
+            nama
+        })
+        Axios.patch(API_URL + `users/${idUser}`, {
+            cart: kosong
+        })
 
     }
 
@@ -85,9 +111,10 @@ class Profile extends Component {
                                         movie name = {val.name}
                                     </Typography>
                                     <Typography variant="body2" gutterBottom>
+                                        sebanyak = {val.ticketAmount} kursi
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary">
-                                        amount to be paid = Rp. {val.totalPrice.toLocaleString()}
+                                        dengan total harga = Rp. {val.totalPrice.toLocaleString()}
                                     </Typography>
                                     nomor kursi = {tes}
                                 </Grid>
@@ -109,6 +136,7 @@ class Profile extends Component {
 
     render() {
         console.log(this.state.totalPrice);
+        console.log(this.props.cart);
 
         return (
 
@@ -130,12 +158,19 @@ class Profile extends Component {
                         href='/ganti'>
                         Ganti Password
                     </Button>
+                    <Button
+                        variant="contained"
+                        color="default"
+                        startIcon={<SaveIcon />}
+                        href="/transaction-history">
+                        liat transaction detail
+                                </Button>
                     <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }}>
                         {this.rendertiket()}
-                        {this.rendercheckout()}
                         <Grid item>
                             <br></br>
                             <Typography variant="body2" color="textSecondary">
+                                {this.totalharga()}
                                 total semua harga tiket adalah = Rp. {this.state.totalPrice.toLocaleString()}
                             </Typography>
                         </Grid>
@@ -143,6 +178,8 @@ class Profile extends Component {
                             variant="contained"
                             color="default"
                             startIcon={<SaveIcon />}
+                            onClick={this.checkout}
+                            href="/"
                         >
                             checkout
                                 </Button>
@@ -155,8 +192,7 @@ class Profile extends Component {
 
 const mapStatetoProps = ({ auth }) => {
     return {
-
+        idUser: auth.id,
     }
 }
-
 export default connect(mapStatetoProps, { Logout })(Profile);

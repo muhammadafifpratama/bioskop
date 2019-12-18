@@ -210,11 +210,10 @@ class SeatReservation extends Component {
     addToCart = () => {
         let { cart, idUser } = this.props;
         let { name, id, booked } = this.props.location.state;
-        let { price, chosen, count, kursi, nomorkursi } = this.state;
+        let { price, chosen, count, nomorkursi } = this.state;
         let addCart = {
             name,
             totalPrice: price,
-            seats: kursi,
             ticketAmount: count,
             nomorkursi
         }
@@ -227,7 +226,7 @@ class SeatReservation extends Component {
         })
             .then((res) => {
                 console.log(res.data)
-                Axios.patch(API_URL + `movies/${id}`, {
+                Axios.patch(API_URL + `movies/${id}`, { 
                     booked: booked
                 })
                     .then((res) => {
