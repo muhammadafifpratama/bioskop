@@ -222,7 +222,15 @@ class Admin extends Component {
                     href="/"
                 >
                     Logout
-      </Button>
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<BlockIcon />}
+                    href="/alltransaction"
+                >
+                    liat transaksi semua user
+                </Button>
                 <Button onClick={() => this.setState({ openModal: true })}>
                     Add Movie
                 </Button>

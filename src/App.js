@@ -16,6 +16,7 @@ import tombol from "./page/profile"
 import order from "./page/pesenkursi"
 import notfound from "./page/404"
 import history from "./page/transaksi"
+import semua from "./page/semuatransaksi"
 
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
           <Route path="/daftar" component={daftar} />
           <Route path="/movie-detail" component={isifilm} />
           <Route path="/transaction-history" component={history} />
+          <Route path="/alltransaction" component={semua} />
           <Route path="*" component={notfound} />
         </Switch>
       </div>
