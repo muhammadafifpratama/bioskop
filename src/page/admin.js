@@ -10,6 +10,8 @@ import { Button } from '@material-ui/core';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
 import { Logout } from "../redux/action"
 import BlockIcon from '@material-ui/icons/Block';
+import { connect } from "react-redux";
+import { Link, Redirect } from 'react-router-dom';
 
 const onBtnLogout = () => {
     Logout()
@@ -28,6 +30,14 @@ class Admin extends Component {
     }
 
     componentDidMount() {
+        // if (this.props.role !== "admin") {
+        //     return (
+        //         <Redirect to='/'>
+
+        //         </Redirect>
+        //     )
+        // }
+        console.log(this.props.role);
         Axios.get(API_URL + 'movies')
             .then((res) => {
                 this.setState({ data: res.data })
@@ -211,85 +221,99 @@ class Admin extends Component {
 
     render() {
         let { openModal, selectedId } = this.state;
-        console.log(selectedId)
-        return (
-            <div>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<BlockIcon />}
-                    onClick={onBtnLogout}
-                    href="/"
-                >
-                    Logout
+        console.log(this.props.role)
+        if (this.props.role === "admin") {
+            return (
+                <div>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<BlockIcon />}
+                        onClick={onBtnLogout}
+                        href="/"
+                    >
+                        Logout
                 </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<BlockIcon />}
-                    href="/alltransaction"
-                >
-                    liat transaksi semua user
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<BlockIcon />}
+                        href="/alltransaction"
+                    >
+                        liat transaksi semua user
                 </Button>
-                <Button onClick={() => this.setState({ openModal: true })}>
-                    Add Movie
+                    <Button onClick={() => this.setState({ openModal: true })}>
+                        Add Movie
                 </Button>
-                <Modal isOpen={openModal}>
-                    <ModalHeader>Add New Movie</ModalHeader>
-                    <ModalBody>
-                        <Label>
-                            Movie Title
+                    <Modal isOpen={openModal}>
+                        <ModalHeader>Add New Movie</ModalHeader>
+                        <ModalBody>
+                            <Label>
+                                Movie Title
                         </Label>
-                        <Input type='text' innerRef={(title) => this.title = title} />
-                        <Label>
-                            Director
+                            <Input type='text' innerRef={(title) => this.title = title} />
+                            <Label>
+                                Director
                         </Label>
-                        <Input type='text' innerRef={(directorMov) => this.directorMov = directorMov} />
-                        <Label>
-                            Image URL
+                            <Input type='text' innerRef={(directorMov) => this.directorMov = directorMov} />
+                            <Label>
+                                Image URL
                         </Label>
-                        <Input type='text' innerRef={(image) => this.image = image} />
-                        <Label>
-                            Genre
+                            <Input type='text' innerRef={(image) => this.image = image} />
+                            <Label>
+                                Genre
                         </Label>
-                        <Input type='text' innerRef={(genre) => this.genre = genre} />
-                        <Label>
-                            Duration
+                            <Input type='text' innerRef={(genre) => this.genre = genre} />
+                            <Label>
+                                Duration
                         </Label>
-                        <Input type='number' innerRef={(duration) => this.duration = duration} />
-                        <Label>
-                            Synopsis
+                            <Input type='number' innerRef={(duration) => this.duration = duration} />
+                            <Label>
+                                Synopsis
                         </Label>
-                        <Input type='text' innerRef={(synopsis) => this.synopsis = synopsis} />
-                        <Label>
-                            Casts
+                            <Input type='text' innerRef={(synopsis) => this.synopsis = synopsis} />
+                            <Label>
+                                Casts
                         </Label>
-                        <Input type='text' innerRef={(casts) => this.casts = casts} />
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={() => this.setState({ openModal: false })}>Cancel</Button>
-                        <Button color="primary" onClick={this.onBtnAddMovie}>Confirm</Button>
-                    </ModalFooter>
-                </Modal>
-                <Table>
-                    <TableHead>
-                        <TableCell>ID</TableCell>
-                        <TableCell>Title</TableCell>
-                        <TableCell>Director</TableCell>
-                        <TableCell>Image</TableCell>
-                        <TableCell>Genre</TableCell>
-                        <TableCell>Duration</TableCell>
-                        <TableCell>Synopsis</TableCell>
-                        <TableCell>Casts</TableCell>
-                        <TableCell>Action</TableCell>
-                    </TableHead>
-                    <TableBody>
-                        {this.renderMovies()}
-                    </TableBody>
-                </Table>
-            </div>
-        );
+                            <Input type='text' innerRef={(casts) => this.casts = casts} />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="secondary" onClick={() => this.setState({ openModal: false })}>Cancel</Button>
+                            <Button color="primary" onClick={this.onBtnAddMovie}>Confirm</Button>
+                        </ModalFooter>
+                    </Modal>
+                    <Table>
+                        <TableHead>
+                            <TableCell>ID</TableCell>
+                            <TableCell>Title</TableCell>
+                            <TableCell>Director</TableCell>
+                            <TableCell>Image</TableCell>
+                            <TableCell>Genre</TableCell>
+                            <TableCell>Duration</TableCell>
+                            <TableCell>Synopsis</TableCell>
+                            <TableCell>Casts</TableCell>
+                            <TableCell>Action</TableCell>
+                        </TableHead>
+                        <TableBody>
+                            {this.renderMovies()}
+                        </TableBody>
+                    </Table>
+                </div>
+            );
+        }
+        else {
+            return (
+                <Redirect to='/'>
+
+                </Redirect>
+            )
+        }
+    }
+}
+const mapStatetoProps = ({ auth }) => {
+    return {
+        role: auth.role,
     }
 }
 
-export default Admin;
+export default connect(mapStatetoProps)(Admin)

@@ -178,7 +178,20 @@
         "Idina Menzel",
         "Jonathan Groff"
       ],
-      "booked": [],
+      "booked": [
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          8
+        ]
+      ],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/157250534676979_287x421.jpg"
     },
     {
@@ -214,7 +227,20 @@
         "Christian Bale",
         "Jon Bernthal"
       ],
-      "booked": [],
+      "booked": [
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          10
+        ]
+      ],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/1572858859730_287x421.jpg"
     },
     {
@@ -231,6 +257,21 @@
       ],
       "booked": [],
       "id": 9
+    },
+    {
+      "name": "ngetes",
+      "director": "ngeyes",
+      "image": "ngetes",
+      "genre": [
+        "ngetes"
+      ],
+      "duration": "1",
+      "synopsis": "ngetes",
+      "casts": [
+        "ngetes"
+      ],
+      "booked": [],
+      "id": 10
     }
   ],
   "users": [
@@ -317,6 +358,38 @@
       ],
       "nama": "asd",
       "id": 2
+    },
+    {
+      "data": [
+        {
+          "name": "Frozen II",
+          "totalPrice": 150000,
+          "ticketAmount": 3,
+          "nomorkursi": [
+            "B6",
+            "C7",
+            "D8"
+          ]
+        }
+      ],
+      "nama": "asd",
+      "id": 3
+    },
+    {
+      "data": [
+        {
+          "name": "Ford V Ferrari",
+          "totalPrice": 150000,
+          "ticketAmount": 3,
+          "nomorkursi": [
+            "B8",
+            "C9",
+            "D10"
+          ]
+        }
+      ],
+      "nama": "asd",
+      "id": 4
     }
   ]
 }

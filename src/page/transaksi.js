@@ -11,10 +11,18 @@ class Transaksi extends Component {
         let username = localStorage.getItem('username')
         Axios.get(API_URL + `transaction?nama=${username}`)
             .then((res) => {
-                console.log(res.data[0].data);
 
+                // mapteros.map((aaa) => {
+                //     console.log(res.data)
+                //     return (
+                //         console.log()
+
+                //     )
+                // })
+                console.log(res.data);
+                console.log(res.data[1].data);
                 this.setState({
-                    data: res.data[0].data
+                    data: res.data
                 })
             })
             .catch((err) => {
@@ -24,17 +32,22 @@ class Transaksi extends Component {
 
     rendertransaksi = () => {
         let data = this.state.data
+        console.log(data);
         return data.map((val) => {
-            console.log(val);
-            return (
-                <div>
-                    {val.name}<br></br>
-                    {val.totalPrice}<br></br>
-                    {val.ticketAmount}<br></br>
-                    {val.nomorkursi}<br></br>
-                    <br></br>
-                </div>
-            )
+            console.log(val.data);
+            let mapteros = val.data
+            return mapteros.map((vala) => {
+                console.log(vala)
+                return (
+                    <div>
+                        {vala.name}<br></br>
+                        {vala.totalPrice}<br></br>
+                        {vala.ticketAmount}<br></br>
+                        {vala.nomorkursi}<br></br>
+                        <br></br>
+                    </div>
+                )
+            })
         })
     }
 
