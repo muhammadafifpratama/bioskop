@@ -3,7 +3,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Axios from "axios"
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Login } from '../redux/action';
 //masih ada bugnya userbaru belom dites cartnya
 
 class Register extends Component {
@@ -16,7 +18,6 @@ class Register extends Component {
             email: "",
             confirm: "",
             char: false,
-            spec: false,
             num: false,
             show: false,
             border: false,
@@ -27,31 +28,33 @@ class Register extends Component {
     handleChange = (event) => {
         let pass = event.target.value
         let num = /[0-9]/
-        let spec = /[!@#$%^&*;]/
+        // let spec = /[!@#$%^&*;]/
         this.setState({
             [event.target.name]: event.target.value,
             num: num.test(pass),
-            spec: spec.test(pass),
-            char: pass.length > 7,
-            border: (num.test(pass) && spec.test(pass) && (pass.length > 7))
+            // spec: spec.test(pass),
+            char: pass.length > 8,
+            border: (num.test(pass) && (pass.length > 8))
         },
             console.log(event.target.value)
         )
     }
 
     registerUser = () => {
-        let { char, spec, num, username, password, confirmPass, email, cart } = this.state
+        let { char, num, username, password, confirm, email, cart } = this.state
         let role = 'user';
-        if (password !== confirmPass) {
+
+
+        if (password !== confirm) {
             alert('passwordnya ga cocok silahkan dicek lagi')
         } else {
             Axios.get(`http://localhost:2000/users?username=${username}`)
                 .then((res) => {
-                    console.log(res.data)
+                    console.log(res.data[0])
                     if (res.data.length !== 0) {
                         alert('username has been taken')
                     } else {
-                        if (char && spec && num) {
+                        if (char && num) {
                             Axios.post('http://localhost:2000/users', {
                                 username,
                                 password,
@@ -60,12 +63,11 @@ class Register extends Component {
                                 cart
                             })
                                 .then((res) => {
-                                    console.log(res.data)
-                                    alert("registered successfully")
-
+                                    // this.props.Login(res.data[0])
+                                    // localStorage.setItem('username', res.data[0].username)
                                 })
                         } else {
-                            alert('Please Fill the Password Requirements')
+                            alert('invalid password')
                         }
                     }
                 })
@@ -73,7 +75,14 @@ class Register extends Component {
     }
 
     render() {
-        let { char, spec, num, show, border } = this.state
+        // if (this.props.username) {
+        //     return (
+        //         <Redirect to='/'>
+
+        //         </Redirect>
+        //     )
+        // }
+        let { char, num, show } = this.state
         return (
             <div style={{
                 position: 'absolute', left: '50%', top: '50%',
@@ -94,7 +103,7 @@ class Register extends Component {
                         <br></br>
                         <Button variant="contained" color="secondary" style={{ minWidth: '185px' }} onClick={this.registerUser}>Register</Button>
 
-                        password harus memiliki angka tanda baca dan panjangnya harus 8 karakter atau lebih
+                        {/* password harus memiliki angka tanda baca dan panjangnya harus 8 karakter atau lebih */}
 
                     </div>
                 </Box >
@@ -112,17 +121,6 @@ class Register extends Component {
                                     :
                                     <div style={{ color: 'red' }}>
                                         Password length must be 8 or more Characters
-                            </div>
-                            }
-                            {
-                                spec
-                                    ?
-                                    <div style={{ color: 'green' }}>
-                                        Password must include special characters
-                            </div>
-                                    :
-                                    <div style={{ color: 'red' }}>
-                                        Password must include special characters
                             </div>
                             }
                             {
@@ -145,4 +143,10 @@ class Register extends Component {
     }
 }
 
-export default Register
+const mapStatetoProps = ({ auth }) => {
+    return {
+        username: auth.username
+    }
+}
+
+export default connect(mapStatetoProps, { Login })(Register)

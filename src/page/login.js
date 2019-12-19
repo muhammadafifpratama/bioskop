@@ -30,12 +30,23 @@ class Loginpage extends Component {
             })
                 .then((res) => {
                     if (res.data.length === 0) {
-                        alert('username or password invalid')
+                        Axios.get(`http://localhost:2000/users?email=${username}&password=${password}`, {
+                            username,
+                            password
+                        })
+                            .then((res) => {
+                                if (res.data.length === 0) {
+                                    alert('username or email or password invalid')
+                                }
+                                else {
+                                    this.props.Login(res.data[0])
+                                    localStorage.setItem('username', res.data[0].username)
+                                }
+                            })
                     } else {
-                        console.log(res.data)
                         this.props.Login(res.data[0])
                         localStorage.setItem('username', res.data[0].username)
-                        console.log(this.props.username)
+                        // console.log(this.props.username)
                     }
                 })
                 .catch((err) => {

@@ -36,22 +36,6 @@
         [
           4,
           4
-        ],
-        [
-          4,
-          0
-        ],
-        [
-          3,
-          1
-        ],
-        [
-          1,
-          3
-        ],
-        [
-          0,
-          4
         ]
       ],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/157380448937451_287x421.jpg"
@@ -92,6 +76,26 @@
           4
         ],
         [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
           4,
           0
         ],
@@ -106,6 +110,98 @@
         [
           0,
           4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          2,
+          13
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          1,
+          12
+        ],
+        [
+          3,
+          14
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          1,
+          16
+        ],
+        [
+          2,
+          17
+        ],
+        [
+          3,
+          18
+        ],
+        [
+          4,
+          19
         ]
       ],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/157423720057093_287x421.jpg"
@@ -178,20 +274,7 @@
         "Idina Menzel",
         "Jonathan Groff"
       ],
-      "booked": [
-        [
-          1,
-          6
-        ],
-        [
-          2,
-          7
-        ],
-        [
-          3,
-          8
-        ]
-      ],
+      "booked": [],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/157250534676979_287x421.jpg"
     },
     {
@@ -229,24 +312,24 @@
       ],
       "booked": [
         [
+          0,
+          0
+        ],
+        [
           1,
-          8
+          1
         ],
         [
           2,
-          9
+          2
         ],
         [
           3,
-          10
+          3
         ],
         [
-          1,
-          10
-        ],
-        [
-          3,
-          8
+          4,
+          4
         ]
       ],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/1572858859730_287x421.jpg"
@@ -306,53 +389,81 @@
       "email": "asd",
       "id": 3,
       "cart": []
+    },
+    {
+      "username": "user",
+      "password": "useruser1!",
+      "role": "user",
+      "email": "user",
+      "cart": [],
+      "id": 4
+    },
+    {
+      "username": "user1",
+      "password": "useruser1",
+      "role": "user",
+      "email": "user",
+      "cart": [],
+      "id": 5
+    },
+    {
+      "username": "user2",
+      "password": "useruser2",
+      "role": "user",
+      "email": "user2",
+      "cart": [],
+      "id": 6
+    },
+    {
+      "username": "asd1",
+      "password": "asdasdasd1",
+      "role": "user",
+      "email": "asd1",
+      "cart": [],
+      "id": 7
+    },
+    {
+      "username": "asd3",
+      "password": "asdasdasd1",
+      "role": "user",
+      "email": "asd",
+      "cart": [],
+      "id": 8
+    },
+    {
+      "username": "asd99",
+      "password": "asdasdasd1",
+      "role": "user",
+      "email": "asd",
+      "cart": [],
+      "id": 9
     }
   ],
   "transaction": [
     {
       "data": [
         {
-          "name": "Jumanji: The Next Level",
-          "totalPrice": 200000,
-          "ticketAmount": 4,
-          "nomorkursi": [
-            "E0",
-            "D1",
-            "B3",
-            "A4"
-          ]
-        },
-        {
           "name": "The Good Liar",
-          "totalPrice": 200000,
-          "ticketAmount": 4,
+          "totalPrice": 250000,
+          "ticketAmount": 5,
           "nomorkursi": [
-            "E0",
-            "D1",
-            "B3",
-            "A4"
+            "A0",
+            "B1",
+            "C2",
+            "D3",
+            "E4"
           ]
         }
       ],
-      "nama": "lian",
+      "namauser": "lian",
+      "date": "2019/12/19",
+      "totalPrice": 250000,
       "id": 1
     },
     {
       "data": [
         {
-          "name": "Jumanji: The Next Level",
-          "totalPrice": 250000,
-          "ticketAmount": 5,
-          "nomorkursi": [
-            "A0",
-            "B1",
-            "C2",
-            "D3",
-            "E4"
-          ]
-        },
-        {
-          "name": "The Good Liar",
+          "name": "Ford V Ferrari",
           "totalPrice": 250000,
           "ticketAmount": 5,
           "nomorkursi": [
@@ -364,55 +475,10 @@
           ]
         }
       ],
-      "nama": "asd",
+      "namauser": "lian",
+      "date": "2019/12/19",
+      "totalPrice": 250000,
       "id": 2
-    },
-    {
-      "data": [
-        {
-          "name": "Frozen II",
-          "totalPrice": 150000,
-          "ticketAmount": 3,
-          "nomorkursi": [
-            "B6",
-            "C7",
-            "D8"
-          ]
-        }
-      ],
-      "nama": "asd",
-      "id": 3
-    },
-    {
-      "data": [
-        {
-          "name": "Ford V Ferrari",
-          "totalPrice": 150000,
-          "ticketAmount": 3,
-          "nomorkursi": [
-            "B8",
-            "C9",
-            "D10"
-          ]
-        }
-      ],
-      "nama": "asd",
-      "id": 4
-    },
-    {
-      "data": [
-        {
-          "name": "Ford V Ferrari",
-          "totalPrice": 100000,
-          "ticketAmount": 2,
-          "nomorkursi": [
-            "B10",
-            "D8"
-          ]
-        }
-      ],
-      "nama": "asd",
-      "id": 5
     }
   ]
 }

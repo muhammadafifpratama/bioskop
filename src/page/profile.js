@@ -72,20 +72,33 @@ class Profile extends Component {
     }
 
     checkout = () => {
-        let nama = this.state.namauser
-        let data = this.state.data
+        let { namauser, data, totalPrice } = this.state
         let kosong = []
         let { idUser } = this.props;
         console.log(data);
-        console.log(nama)
+        console.log(namauser)
+        var month = new Date().getMonth() + 1; //Current Month
+        var day = new Date().getDate()
+        var year = new Date().getFullYear(); //Current Year
+        var date = year + "/" + month + "/" + day
         Axios.post(API_URL + `transaction`, {
             data,
-            nama
+            namauser,
+            date,
+            totalPrice
         })
         Axios.patch(API_URL + `users/${idUser}`, {
             cart: kosong
         })
 
+    }
+
+    delete = () => {
+        let { idUser } = this.props;
+        let kosong = []
+        Axios.patch(API_URL + `users/${idUser}`, {
+            cart: kosong
+        })
     }
 
     rendertiket = () => {
@@ -122,6 +135,8 @@ class Profile extends Component {
                                     variant="contained"
                                     color="default"
                                     startIcon={<SaveIcon />}
+                                    onClick={this.delete}
+                                    href="/profile"
                                 >
                                     delete ticket
                                 </Button>
