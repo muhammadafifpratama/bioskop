@@ -239,6 +239,14 @@
         [
           3,
           10
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          3,
+          8
         ]
       ],
       "image": "https://media.21cineplex.com/webcontent/gallery/pictures/1572858859730_287x421.jpg"
@@ -390,6 +398,21 @@
       ],
       "nama": "asd",
       "id": 4
+    },
+    {
+      "data": [
+        {
+          "name": "Ford V Ferrari",
+          "totalPrice": 100000,
+          "ticketAmount": 2,
+          "nomorkursi": [
+            "B10",
+            "D8"
+          ]
+        }
+      ],
+      "nama": "asd",
+      "id": 5
     }
   ]
 }

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Axios from "axios"
 import { Redirect } from "react-router-dom";
+//masih ada bugnya userbaru belom dites cartnya
 
 class Register extends Component {
 
