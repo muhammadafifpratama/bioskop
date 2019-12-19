@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Axios from "axios"
+import { Redirect } from "react-router-dom";
 
 class Register extends Component {
 
@@ -17,7 +18,8 @@ class Register extends Component {
             spec: false,
             num: false,
             show: false,
-            border: false
+            border: false,
+            cart: []
         }
     }
 
@@ -37,11 +39,7 @@ class Register extends Component {
     }
 
     registerUser = () => {
-        let { char, spec, num } = this.state
-        let username = this.state.username;
-        let password = this.state.password;
-        let confirmPass = this.state.confirm;
-        let email = this.state.email;
+        let { char, spec, num, username, password, confirmPass, email, cart } = this.state
         let role = 'user';
         if (password !== confirmPass) {
             alert('passwordnya ga cocok silahkan dicek lagi')
@@ -57,11 +55,13 @@ class Register extends Component {
                                 username,
                                 password,
                                 role,
-                                email
+                                email,
+                                cart
                             })
                                 .then((res) => {
                                     console.log(res.data)
                                     alert("registered successfully")
+
                                 })
                         } else {
                             alert('Please Fill the Password Requirements')
@@ -92,6 +92,8 @@ class Register extends Component {
                         <TextField id="standard-password-input" label="confirm" type="password" onChange={this.handleChange} name="confirm" value={this.state.confirm} />
                         <br></br>
                         <Button variant="contained" color="secondary" style={{ minWidth: '185px' }} onClick={this.registerUser}>Register</Button>
+
+                        password harus memiliki angka tanda baca dan panjangnya harus 8 karakter atau lebih
 
                     </div>
                 </Box >

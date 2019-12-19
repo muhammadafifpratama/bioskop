@@ -26,16 +26,15 @@ class Admin extends Component {
     state = {
         data: [],
         openModal: false,
-        selectedId: null
+        selectedId: null,
+        redirectLogin: null,
+        aaaaaa: false
     }
 
     componentDidMount() {
-        // if (this.props.role !== "admin") {
-        //     return (
-        //         <Redirect to='/'>
 
-        //         </Redirect>
-        //     )
+        // else if (this.props.role === "") {
+        //     this.setState({ redirectLogin: true })
         // }
         console.log(this.props.role);
         Axios.get(API_URL + 'movies')
@@ -47,6 +46,28 @@ class Admin extends Component {
                 console.log(err)
             })
     }
+    // componentWillUpdate() {
+    //     console.log(this.props.role)
+    //     // if (this.props.role !== "admin") {
+    //     //     this.setState({ redirectLogin: true })
+    //     // }
+    // }
+    // componentDidUpdate() {
+    //     console.log(this.props.role);
+
+    //     // if (this.props.role !== "admin") {
+    //     //     this.setState({ redirectLogin: true })
+    //     // } else {
+    //     //     this.setState({ redirectLogin: false })
+    //     // }
+    // }
+    componentWillReceiveProps() { console.log(this.props.role); }
+    componentWillUnmount() { console.log(this.props.role); }
+    // componentWillReceiveProps() {
+    //     if (this.props.role !== Admin) {
+    //         this.setState({ redirectLogin: true })
+    //     }
+    // }
 
     renderSynopsis = (text) => {
         const arrSyn = text.split(' ')
@@ -220,96 +241,101 @@ class Admin extends Component {
     }
 
     render() {
-        let { openModal, selectedId } = this.state;
+        let { openModal, redirectLogin } = this.state;
         console.log(this.props.role)
-        if (this.props.role === "admin") {
+        if (this.props.role === "user") {
             return (
-                <div>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<BlockIcon />}
-                        onClick={onBtnLogout}
-                        href="/"
-                    >
-                        Logout
-                </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<BlockIcon />}
-                        href="/alltransaction"
-                    >
-                        liat transaksi semua user
-                </Button>
-                    <Button onClick={() => this.setState({ openModal: true })}>
-                        Add Movie
-                </Button>
-                    <Modal isOpen={openModal}>
-                        <ModalHeader>Add New Movie</ModalHeader>
-                        <ModalBody>
-                            <Label>
-                                Movie Title
-                        </Label>
-                            <Input type='text' innerRef={(title) => this.title = title} />
-                            <Label>
-                                Director
-                        </Label>
-                            <Input type='text' innerRef={(directorMov) => this.directorMov = directorMov} />
-                            <Label>
-                                Image URL
-                        </Label>
-                            <Input type='text' innerRef={(image) => this.image = image} />
-                            <Label>
-                                Genre
-                        </Label>
-                            <Input type='text' innerRef={(genre) => this.genre = genre} />
-                            <Label>
-                                Duration
-                        </Label>
-                            <Input type='number' innerRef={(duration) => this.duration = duration} />
-                            <Label>
-                                Synopsis
-                        </Label>
-                            <Input type='text' innerRef={(synopsis) => this.synopsis = synopsis} />
-                            <Label>
-                                Casts
-                        </Label>
-                            <Input type='text' innerRef={(casts) => this.casts = casts} />
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="secondary" onClick={() => this.setState({ openModal: false })}>Cancel</Button>
-                            <Button color="primary" onClick={this.onBtnAddMovie}>Confirm</Button>
-                        </ModalFooter>
-                    </Modal>
-                    <Table>
-                        <TableHead>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Director</TableCell>
-                            <TableCell>Image</TableCell>
-                            <TableCell>Genre</TableCell>
-                            <TableCell>Duration</TableCell>
-                            <TableCell>Synopsis</TableCell>
-                            <TableCell>Casts</TableCell>
-                            <TableCell>Action</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {this.renderMovies()}
-                        </TableBody>
-                    </Table>
-                </div>
-            );
-        }
-        else {
-            return (
-                <Redirect to='/'>
-
-                </Redirect>
+                <Redirect to='/' />
             )
         }
+
+        return (
+            <div>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<BlockIcon />}
+                    onClick={onBtnLogout}
+                    href="/"
+                >
+                    Logout
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<BlockIcon />}
+                    href="/alltransaction"
+                >
+                    liat transaksi semua user
+                </Button>
+                <Button onClick={() => this.setState({ openModal: true })}>
+                    Add Movie
+                </Button>
+                <Modal isOpen={openModal}>
+                    <ModalHeader>Add New Movie</ModalHeader>
+                    <ModalBody>
+                        <Label>
+                            Movie Title
+                        </Label>
+                        <Input type='text' innerRef={(title) => this.title = title} />
+                        <Label>
+                            Director
+                        </Label>
+                        <Input type='text' innerRef={(directorMov) => this.directorMov = directorMov} />
+                        <Label>
+                            Image URL
+                        </Label>
+                        <Input type='text' innerRef={(image) => this.image = image} />
+                        <Label>
+                            Genre
+                        </Label>
+                        <Input type='text' innerRef={(genre) => this.genre = genre} />
+                        <Label>
+                            Duration
+                        </Label>
+                        <Input type='number' innerRef={(duration) => this.duration = duration} />
+                        <Label>
+                            Synopsis
+                        </Label>
+                        <Input type='text' innerRef={(synopsis) => this.synopsis = synopsis} />
+                        <Label>
+                            Casts
+                        </Label>
+                        <Input type='text' innerRef={(casts) => this.casts = casts} />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={() => this.setState({ openModal: false })}>Cancel</Button>
+                        <Button color="primary" onClick={this.onBtnAddMovie}>Confirm</Button>
+                    </ModalFooter>
+                </Modal>
+                <Table>
+                    <TableHead>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Director</TableCell>
+                        <TableCell>Image</TableCell>
+                        <TableCell>Genre</TableCell>
+                        <TableCell>Duration</TableCell>
+                        <TableCell>Synopsis</TableCell>
+                        <TableCell>Casts</TableCell>
+                        <TableCell>Action</TableCell>
+                    </TableHead>
+                    <TableBody>
+                        {this.renderMovies()}
+                    </TableBody>
+                </Table>
+            </div>
+        );
+
     }
+    // else {
+    //     return (
+    //         <Redirect to='/'>
+
+    //         </Redirect>
+    //     )
 }
+
 const mapStatetoProps = ({ auth }) => {
     return {
         role: auth.role,
